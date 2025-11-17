@@ -1,0 +1,413 @@
+# GTL AI Security Platform - Service Packages & Pricing
+# Version: 1.0
+# Last Updated: November 2025
+
+# ============================================
+# TIER 1: AUTOMATED VULNERABILITY ASSESSMENT
+# ============================================
+tier_1_basic:
+  name: "Automated Vulnerability Assessment"
+  target_market: "Small logistics companies (1-50 employees)"
+
+  pricing:
+    setup_fee: 8000  # USD, one-time
+    monthly_fee: 2000  # USD, recurring
+    billing_cycle: monthly
+    minimum_contract: 12  # months
+    annual_discount: 10  # % discount for annual prepay
+
+  includes:
+    scanning:
+      - "Weekly automated security scans"
+      - "Network discovery (nmap)"
+      - "Web vulnerability scanning (nuclei)"
+      - "2 scans per month (configurable schedule)"
+      - "Up to 3 target systems/networks"
+
+    reporting:
+      - "Vulnerability reports (PDF + HTML)"
+      - "Spanish language reports"
+      - "Executive summary included"
+      - "CVSS scoring and prioritization"
+      - "Remediation recommendations"
+
+    alerting:
+      - "Email alerts for critical findings"
+      - "Weekly digest reports"
+      - "30-day report retention"
+
+    support:
+      - "Email support (48-hour response SLA)"
+      - "Knowledge base access"
+      - "Monthly office hours (30 min)"
+      - "Community forum access"
+
+    compliance:
+      - "Basic SUNAT compliance checks"
+      - "Data encryption validation"
+
+  limitations:
+    max_scans_per_month: 8
+    max_concurrent_scans: 1
+    max_target_systems: 3
+    api_rate_limit: "100 requests/minute"
+    report_retention_days: 30
+    custom_agents: false
+    dedicated_support: false
+
+  addons:
+    additional_scan: 250  # USD per scan
+    additional_target: 500  # USD per month per target
+    extended_retention: 200  # USD per month (90 days)
+
+# ============================================
+# TIER 2: CONTINUOUS THREAT DETECTION
+# ============================================
+tier_2_advanced:
+  name: "Continuous Threat Detection"
+  target_market: "Mid-size logistics companies (50-500 employees)"
+  recommended: true  # Most popular tier
+
+  pricing:
+    setup_fee: 15000  # USD, one-time
+    monthly_fee: 5000  # USD, recurring
+    billing_cycle: monthly
+    minimum_contract: 12  # months
+    annual_discount: 15  # % discount for annual prepay
+
+  includes:
+    scanning:
+      - "Daily automated security scans"
+      - "All Tier 1 scanning tools PLUS:"
+      - "SQL injection testing (sqlmap)"
+      - "Advanced web scanning (nikto)"
+      - "8 scans per month (daily schedule available)"
+      - "Up to 10 target systems/networks"
+
+    detection:
+      - "Real-time threat detection (beta)"
+      - "Network traffic analysis"
+      - "Behavioral anomaly detection"
+      - "MITRE ATT&CK mapping"
+
+    reporting:
+      - "All Tier 1 reporting features PLUS:"
+      - "Technical deep-dive reports"
+      - "Compliance matrices (SUNAT, ISO 27001)"
+      - "Trend analysis and metrics"
+      - "90-day report retention"
+
+    alerting:
+      - "Email + Slack/Teams integration"
+      - "Webhook for custom integrations"
+      - "Real-time critical vulnerability alerts"
+      - "Daily summary reports"
+
+    monitoring:
+      - "24/7 web dashboard access"
+      - "Real-time vulnerability metrics"
+      - "Historical trend analysis"
+      - "Custom dashboards (up to 3)"
+
+    support:
+      - "Email + phone support (24-hour response SLA)"
+      - "Quarterly security reviews (1 hour)"
+      - "Priority bug fixes"
+      - "Dedicated account manager"
+
+    compliance:
+      - "Full SUNAT compliance automation"
+      - "Ley 29733 (Peru data protection) validation"
+      - "Evidence collection for audits"
+      - "Compliance dashboard"
+
+  limitations:
+    max_scans_per_month: 32
+    max_concurrent_scans: 3
+    max_target_systems: 10
+    api_rate_limit: "500 requests/minute"
+    report_retention_days: 90
+    custom_agents: "1 included"
+    dedicated_analyst: false
+
+  addons:
+    additional_scan: 150  # USD per scan
+    additional_target: 300  # USD per month per target
+    extended_retention: 400  # USD per month (365 days)
+    additional_custom_agent: 5000  # USD setup + 1000/mo maintenance
+
+# ============================================
+# TIER 3: AI-POWERED SOC-AS-A-SERVICE
+# ============================================
+tier_3_enterprise:
+  name: "AI-Powered SOC-as-a-Service"
+  target_market: "Enterprise logistics (500+ employees)"
+
+  pricing:
+    setup_fee: 30000  # USD, one-time
+    monthly_fee: 10000  # USD, recurring
+    billing_cycle: monthly
+    minimum_contract: 12  # months
+    annual_discount: 20  # % discount for annual prepay
+    custom_pricing_available: true
+
+  includes:
+    scanning:
+      - "Continuous automated security scanning"
+      - "All Tier 2 scanning tools PLUS:"
+      - "Custom vulnerability signatures"
+      - "Advanced exploit testing (authorized)"
+      - "Unlimited scans"
+      - "Unlimited target systems"
+
+    detection:
+      - "Advanced threat detection with ML"
+      - "Behavioral analytics"
+      - "Insider threat detection"
+      - "Supply chain risk monitoring"
+      - "Dark web monitoring (brand mentions)"
+
+    automation:
+      - "Custom agent development (up to 3 agents)"
+      - "Workflow automation"
+      - "Auto-remediation (optional)"
+      - "Custom integration development"
+
+    reporting:
+      - "All Tier 2 reporting features PLUS:"
+      - "Custom report templates"
+      - "Board-level executive reports"
+      - "Regulatory compliance reports"
+      - "365-day report retention"
+      - "Unlimited historical data access"
+
+    alerting:
+      - "Multi-channel alerting (email, Slack, SMS, PagerDuty)"
+      - "Custom webhook integrations"
+      - "SIEM integration (Splunk, QRadar, etc.)"
+      - "Escalation workflows"
+
+    monitoring:
+      - "24/7 SOC monitoring by security analysts"
+      - "Custom dashboards (unlimited)"
+      - "Real-time threat intelligence"
+      - "Executive KPI dashboard"
+
+    support:
+      - "24/7 phone + email support (4-hour response SLA)"
+      - "Dedicated security analyst (20 hours/month)"
+      - "Monthly security review meetings"
+      - "Quarterly risk assessments"
+      - "Annual penetration test (manual)"
+      - "Priority feature requests"
+
+    compliance:
+      - "Full compliance automation:"
+      - "  - HIPAA (for medical logistics)"
+      - "  - ISO 27001"
+      - "  - SOC 2 Type II"
+      - "  - PCI-DSS (if applicable)"
+      - "  - SUNAT + Ley 29733"
+      - "Audit support (unlimited)"
+      - "Evidence management system"
+
+    sla:
+      - "99.9% uptime guarantee"
+      - "4-hour critical vulnerability notification"
+      - "24-hour remediation guidance"
+      - "Financial penalties for SLA misses"
+
+  limitations:
+    max_scans_per_month: unlimited
+    max_concurrent_scans: 10
+    max_target_systems: unlimited
+    api_rate_limit: "2000 requests/minute"
+    report_retention_days: 365
+    custom_agents: "3 included, unlimited available"
+    dedicated_analyst: "20 hours/month included"
+
+  addons:
+    additional_analyst_hours: 200  # USD per hour
+    additional_custom_agent: 3000  # USD setup + 500/mo maintenance
+    manual_pentest: 15000  # USD per engagement
+    incident_response_retainer: 5000  # USD per month (24/7 on-call)
+    red_team_exercise: 25000  # USD per exercise
+
+# ============================================
+# ADD-ON SERVICES (All Tiers)
+# ============================================
+addon_services:
+
+  compliance_packages:
+    hipaa_compliance:
+      name: "HIPAA Compliance Automation"
+      applicable_tiers: [tier_2_advanced, tier_3_enterprise]
+      setup_fee: 5000
+      monthly_fee: 1500
+      includes:
+        - "PHI exposure detection"
+        - "HIPAA § 164.312 validation"
+        - "Medical AI endpoint security"
+        - "Monthly compliance reports"
+
+    iso27001_compliance:
+      name: "ISO 27001 Compliance Automation"
+      applicable_tiers: [tier_2_advanced, tier_3_enterprise]
+      setup_fee: 7500
+      monthly_fee: 2000
+      includes:
+        - "147 control validation"
+        - "Evidence collection"
+        - "Gap analysis reports"
+        - "Audit preparation"
+
+  professional_services:
+    custom_agent_development:
+      name: "Custom Security Agent Development"
+      price_per_agent: 5000  # setup
+      monthly_maintenance: 1000
+      delivery_time_weeks: 2-4
+
+    security_training:
+      name: "Security Awareness Training"
+      price_per_session: 2500
+      max_attendees: 50
+      duration_hours: 4
+
+    incident_response:
+      name: "Emergency Incident Response"
+      hourly_rate: 300
+      minimum_hours: 8
+      response_time: "4 hours"
+
+    manual_penetration_test:
+      name: "Manual Penetration Testing"
+      price_range: "15000-50000"  # USD, depends on scope
+      includes:
+        - "Manual testing by certified pentesters"
+        - "OWASP Top 10 coverage"
+        - "Detailed remediation report"
+        - "Executive presentation"
+
+# ============================================
+# VOLUME DISCOUNTS
+# ============================================
+volume_discounts:
+  multi_location:
+    description: "Discount for companies with multiple locations"
+    locations_2_to_5: 10  # % discount
+    locations_6_to_10: 15  # % discount
+    locations_11_plus: 20  # % discount
+
+  annual_prepay:
+    tier_1: 10  # % discount
+    tier_2: 15  # % discount
+    tier_3: 20  # % discount
+
+  non_profit:
+    description: "Discount for non-profit organizations"
+    discount: 25  # % discount
+    verification_required: true
+
+# ============================================
+# PILOT PROGRAM (Limited Time)
+# ============================================
+pilot_program:
+  name: "Early Adopter Program"
+  available_until: "2026-03-31"
+  discount: 50  # % off for first 3 months
+  benefits:
+    - "Priority feature requests"
+    - "Direct access to engineering team"
+    - "Case study participation (optional)"
+    - "Lifetime 10% discount after pilot"
+  eligibility:
+    - "Logistics or supply chain company"
+    - "Located in Peru or Latin America"
+    - "Willing to provide feedback"
+  slots_available: 10
+
+# ============================================
+# FREE TRIAL
+# ============================================
+free_trial:
+  duration_days: 30
+  includes:
+    - "Up to 5 scans"
+    - "All Tier 1 features"
+    - "Email support"
+    - "Sample reports"
+  limitations:
+    - "Single target system"
+    - "Community support only"
+    - "No SLA"
+  no_credit_card_required: true
+
+# ============================================
+# PAYMENT TERMS
+# ============================================
+payment_terms:
+  accepted_methods:
+    - "Credit card (Visa, Mastercard, Amex)"
+    - "Wire transfer / ACH"
+    - "Purchase order (Enterprise tier only)"
+
+  billing_currency: USD
+
+  setup_fee_due: "Upon contract signature"
+
+  monthly_fee_due: "1st of each month, in advance"
+
+  late_payment_fee: "1.5% per month (18% annual)"
+
+  cancellation_policy:
+    notice_period_days: 30
+    early_termination_fee: "Remaining contract value × 50%"
+    no_refunds: true
+
+  service_suspension:
+    after_days_overdue: 15
+    reactivation_fee: 500  # USD
+
+# ============================================
+# SUPPORT CHANNELS
+# ============================================
+support_channels:
+  tier_1:
+    - "Email: support@gtl.pe"
+    - "Knowledge base"
+    - "Community forum"
+
+  tier_2:
+    - "Email: support@gtl.pe"
+    - "Phone: +51 1 234 5678 (business hours)"
+    - "Slack channel"
+
+  tier_3:
+    - "Email: support@gtl.pe"
+    - "Phone: +51 1 234 5678 (24/7)"
+    - "Dedicated Slack channel"
+    - "Direct analyst contact"
+
+# ============================================
+# SLA GUARANTEES
+# ============================================
+sla:
+  tier_1:
+    uptime: "99.0%"
+    response_time_email: "48 hours"
+    scan_completion: "Within 24 hours of start"
+
+  tier_2:
+    uptime: "99.5%"
+    response_time_email: "24 hours"
+    response_time_phone: "4 hours (business hours)"
+    scan_completion: "Within 12 hours of start"
+
+  tier_3:
+    uptime: "99.9%"
+    response_time_critical: "4 hours (24/7)"
+    response_time_high: "8 hours (24/7)"
+    response_time_medium: "24 hours"
+    scan_completion: "Within 6 hours of start"
+    financial_penalty: "10% monthly fee credit per 0.1% below SLA"
