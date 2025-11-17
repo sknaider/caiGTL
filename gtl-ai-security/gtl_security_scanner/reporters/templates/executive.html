@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="{{ 'es' if config.language == 'es' else 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if config.language == 'es' %}Resumen Ejecutivo - Evaluación de Seguridad{% else %}Executive Summary - Security Assessment{% endif %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        {% if config.confidential %}
+        .confidential {
+            background: #ff4444;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        {% endif %}
+
+        .summary-section {
+            padding: 30px 40px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .summary-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .risk-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .risk-card {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .risk-card.critical {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+        }
+
+        .risk-card.high {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+        }
+
+        .risk-card.medium {
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            color: #333;
+        }
+
+        .risk-card.low {
+            background: linear-gradient(135deg, #4fc3f7 0%, #0288d1 100%);
+            color: white;
+        }
+
+        .risk-card.minimal {
+            background: linear-gradient(135deg, #81c784 0%, #388e3c 100%);
+            color: white;
+        }
+
+        .risk-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .risk-score {
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .severity-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .severity-item {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .severity-item.critical { background: #ffebee; border-left: 4px solid #ff4444; }
+        .severity-item.high { background: #fff3e0; border-left: 4px solid #ff9800; }
+        .severity-item.medium { background: #fffde7; border-left: 4px solid #ffd54f; }
+        .severity-item.low { background: #e1f5fe; border-left: 4px solid #4fc3f7; }
+        .severity-item.info { background: #f1f8e9; border-left: 4px solid #81c784; }
+
+        .severity-item .count {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .severity-item .label {
+            text-transform: uppercase;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .top-risks {
+            margin: 20px 0;
+        }
+
+        .risk-item {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .risk-item.critical { border-left-color: #ff4444; }
+        .risk-item.high { border-left-color: #ff9800; }
+
+        .risk-item h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .risk-item .severity-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+
+        .severity-badge.critical { background: #ff4444; color: white; }
+        .severity-badge.high { background: #ff9800; color: white; }
+
+        .metadata {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .metadata-item {
+            padding: 10px;
+        }
+
+        .metadata-item .label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .metadata-item .value {
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        @media print {
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if config.confidential %}
+        <div class="confidential">
+            {% if config.language == 'es' %}CONFIDENCIAL{% else %}CONFIDENTIAL{% endif %}
+        </div>
+        {% endif %}
+
+        <div class="header">
+            <h1>{% if config.language == 'es' %}Resumen Ejecutivo{% else %}Executive Summary{% endif %}</h1>
+            <div class="subtitle">{% if config.language == 'es' %}Evaluación de Seguridad{% else %}Security Assessment{% endif %}</div>
+        </div>
+
+        <!-- Metadata Section -->
+        <div class="summary-section">
+            <h2>{% if config.language == 'es' %}Información General{% else %}General Information{% endif %}</h2>
+            <div class="metadata">
+                <div class="metadata-grid">
+                    <div class="metadata-item">
+                        <div class="label">{% if config.language == 'es' %}ID del Escaneo{% else %}Scan ID{% endif %}</div>
+                        <div class="value">{{ summary.scan_id }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="label">{% if config.language == 'es' %}Cliente{% else %}Client{% endif %}</div>
+                        <div class="value">{{ summary.client_id }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="label">{% if config.language == 'es' %}Fecha del Escaneo{% else %}Scan Date{% endif %}</div>
+                        <div class="value">{{ summary.scan_date.strftime('%Y-%m-%d %H:%M') }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="label">{% if config.language == 'es' %}Duración{% else %}Duration{% endif %}</div>
+                        <div class="value">{{ "%.2f"|format(summary.duration_seconds) }} {% if config.language == 'es' %}segundos{% else %}seconds{% endif %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Overview Section -->
+        <div class="summary-section">
+            <h2>{% if config.language == 'es' %}Evaluación de Riesgo{% else %}Risk Assessment{% endif %}</h2>
+            <div class="risk-overview">
+                <div class="risk-card {{ summary.risk_level.lower() }}">
+                    <h3>{% if config.language == 'es' %}Nivel de Riesgo{% else %}Risk Level{% endif %}</h3>
+                    <div class="risk-score">{{ summary.risk_level }}</div>
+                </div>
+                <div class="risk-card {{ summary.risk_level.lower() }}">
+                    <h3>{% if config.language == 'es' %}Puntuación de Riesgo{% else %}Risk Score{% endif %}</h3>
+                    <div class="risk-score">{{ "%.1f"|format(summary.risk_score) }}/100</div>
+                </div>
+                <div class="risk-card medium">
+                    <h3>{% if config.language == 'es' %}Total de Hallazgos{% else %}Total Findings{% endif %}</h3>
+                    <div class="risk-score">{{ summary.total_findings }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Severity Breakdown Section -->
+        <div class="summary-section">
+            <h2>{% if config.language == 'es' %}Hallazgos por Severidad{% else %}Findings by Severity{% endif %}</h2>
+            <div class="severity-breakdown">
+                <div class="severity-item critical">
+                    <span class="count">{{ summary.severity_counts.critical }}</span>
+                    <span class="label">{% if config.language == 'es' %}Crítica{% else %}Critical{% endif %}</span>
+                </div>
+                <div class="severity-item high">
+                    <span class="count">{{ summary.severity_counts.high }}</span>
+                    <span class="label">{% if config.language == 'es' %}Alta{% else %}High{% endif %}</span>
+                </div>
+                <div class="severity-item medium">
+                    <span class="count">{{ summary.severity_counts.medium }}</span>
+                    <span class="label">{% if config.language == 'es' %}Media{% else %}Medium{% endif %}</span>
+                </div>
+                <div class="severity-item low">
+                    <span class="count">{{ summary.severity_counts.low }}</span>
+                    <span class="label">{% if config.language == 'es' %}Baja{% else %}Low{% endif %}</span>
+                </div>
+                <div class="severity-item info">
+                    <span class="count">{{ summary.severity_counts.info }}</span>
+                    <span class="label">Info</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Risks Section -->
+        {% if summary.top_risks %}
+        <div class="summary-section">
+            <h2>{% if config.language == 'es' %}Principales Riesgos{% else %}Top Risks{% endif %}</h2>
+            <div class="top-risks">
+                {% for risk in summary.top_risks %}
+                <div class="risk-item {{ risk.severity }}">
+                    <div>
+                        <span class="severity-badge {{ risk.severity }}">{{ risk.severity }}</span>
+                        <span style="font-size: 0.9em; color: #666;">CVSS: {{ "%.1f"|format(risk.cvss_score) }}</span>
+                    </div>
+                    <h4>{{ risk.title }}</h4>
+                    <p style="color: #666; margin-top: 10px;">{{ risk.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>{% if config.language == 'es' %}Generado por{% else %}Generated by{% endif %} GTL AI Security Platform</p>
+            <p style="font-size: 0.9em; opacity: 0.8;">{{ generated_at.strftime('%Y-%m-%d %H:%M:%S UTC') }}</p>
+        </div>
+    </div>
+</body>
+</html>

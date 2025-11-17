@@ -16,10 +16,29 @@ RUN apt-get update && apt-get install -y \
     make \
     libpq-dev \
     nmap \
+    nikto \
+    sqlmap \
     netcat-openbsd \
     curl \
     wget \
+    git \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Nuclei (latest version from GitHub)
+RUN wget -qO- https://github.com/projectdiscovery/nuclei/releases/download/v3.1.0/nuclei_3.1.0_linux_amd64.zip \
+    -O nuclei.zip && \
+    unzip nuclei.zip -d /usr/local/bin && \
+    rm nuclei.zip && \
+    chmod +x /usr/local/bin/nuclei
+
+# Install Nuclei templates
+RUN nuclei -update-templates || true
+
+# Install CAI Framework (optional - uncomment if using CAI)
+# RUN git clone https://github.com/aliasrobotics/cai /opt/cai && \
+#     cd /opt/cai && \
+#     pip install -e .
 
 # Create app directory
 WORKDIR /app

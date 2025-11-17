@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="{{ 'es' if config.language == 'es' else 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if config.language == 'es' %}Informe Técnico - Evaluación de Seguridad{% else %}Technical Report - Security Assessment{% endif %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 30px 40px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+
+        .section {
+            padding: 30px 40px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section h2 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #333;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        .network-scan {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .services-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .services-table th {
+            background: #333;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .services-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .services-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .vulnerability {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .vulnerability-header {
+            padding: 15px 20px;
+            border-left: 5px solid;
+            cursor: pointer;
+        }
+
+        .vulnerability-header.critical {
+            border-left-color: #d32f2f;
+            background: #ffebee;
+        }
+
+        .vulnerability-header.high {
+            border-left-color: #f57c00;
+            background: #fff3e0;
+        }
+
+        .vulnerability-header.medium {
+            border-left-color: #fbc02d;
+            background: #fffde7;
+        }
+
+        .vulnerability-header.low {
+            border-left-color: #0288d1;
+            background: #e1f5fe;
+        }
+
+        .vulnerability-header.info {
+            border-left-color: #388e3c;
+            background: #f1f8e9;
+        }
+
+        .vulnerability-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .vulnerability-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge.critical { background: #d32f2f; color: white; }
+        .badge.high { background: #f57c00; color: white; }
+        .badge.medium { background: #fbc02d; color: #333; }
+        .badge.low { background: #0288d1; color: white; }
+        .badge.info { background: #388e3c; color: white; }
+
+        .vulnerability-body {
+            padding: 20px;
+            background: #fafafa;
+            border-top: 1px solid #ddd;
+        }
+
+        .detail-section {
+            margin: 15px 0;
+        }
+
+        .detail-section h4 {
+            color: #667eea;
+            font-size: 1em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .detail-section p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+
+        .references {
+            margin: 10px 0;
+        }
+
+        .references a {
+            display: block;
+            color: #667eea;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .references a:hover {
+            text-decoration: underline;
+        }
+
+        .remediation-plan {
+            background: #e8f5e9;
+            border-left: 4px solid #388e3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .remediation-plan h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .remediation-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #388e3c;
+        }
+
+        .remediation-item .priority {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .affected-findings {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px 40px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media print {
+            .container {
+                box-shadow: none;
+            }
+            .vulnerability-header {
+                cursor: default;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{% if config.language == 'es' %}INFORME TÉCNICO DE SEGURIDAD{% else %}TECHNICAL SECURITY REPORT{% endif %}</h1>
+            <div class="subtitle">&gt; {% if config.language == 'es' %}Análisis detallado de vulnerabilidades{% else %}Detailed vulnerability analysis{% endif %}</div>
+        </div>
+
+        <!-- Network Scan Results -->
+        <div class="section">
+            <h2>{% if config.language == 'es' %}Resultados del Escaneo de Red{% else %}Network Scan Results{% endif %}</h2>
+            <div class="network-scan">
+                <p><strong>{% if config.language == 'es' %}Hosts descubiertos:{% else %}Hosts discovered:{% endif %}</strong> {{ report.network_scan_results.hosts_discovered }}</p>
+                <p><strong>{% if config.language == 'es' %}Puertos abiertos:{% else %}Open ports:{% endif %}</strong> {{ report.network_scan_results.open_ports }}</p>
+            </div>
+
+            {% if report.network_scan_results.services %}
+            <h3>{% if config.language == 'es' %}Servicios Detectados{% else %}Detected Services{% endif %}</h3>
+            <table class="services-table">
+                <thead>
+                    <tr>
+                        <th>{% if config.language == 'es' %}Puerto{% else %}Port{% endif %}</th>
+                        <th>{% if config.language == 'es' %}Protocolo{% else %}Protocol{% endif %}</th>
+                        <th>{% if config.language == 'es' %}Servicio{% else %}Service{% endif %}</th>
+                        <th>{% if config.language == 'es' %}Versión{% else %}Version{% endif %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for service in report.network_scan_results.services %}
+                    <tr>
+                        <td>{{ service.port }}</td>
+                        <td>{{ service.protocol }}</td>
+                        <td>{{ service.service }}</td>
+                        <td>{{ service.version or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+        <!-- Vulnerability Details -->
+        <div class="section">
+            <h2>{% if config.language == 'es' %}Hallazgos de Seguridad Detallados{% else %}Detailed Security Findings{% endif %}</h2>
+            <p style="margin-bottom: 20px; color: #666;">
+                {% if config.language == 'es' %}
+                Total de vulnerabilidades: <strong>{{ report.findings|length }}</strong>
+                {% else %}
+                Total vulnerabilities: <strong>{{ report.findings|length }}</strong>
+                {% endif %}
+            </p>
+
+            {% for finding in report.findings %}
+            <div class="vulnerability">
+                <div class="vulnerability-header {{ finding.severity }}">
+                    <div class="vulnerability-title">
+                        <span class="badge {{ finding.severity }}">{{ finding.severity }}</span>
+                        {{ finding.title }}
+                    </div>
+                    <div class="vulnerability-meta">
+                        <span><strong>CVSS:</strong> {{ "%.1f"|format(finding.cvss_score) }}</span>
+                        {% if finding.cve_id %}
+                        <span><strong>CVE:</strong> {{ finding.cve_id }}</span>
+                        {% endif %}
+                        <span><strong>{% if config.language == 'es' %}Herramienta:{% else %}Tool:{% endif %}</strong> {{ finding.tool }}</span>
+                        <span><strong>{% if config.language == 'es' %}Confianza:{% else %}Confidence:{% endif %}</strong> {{ finding.confidence }}</span>
+                    </div>
+                </div>
+
+                <div class="vulnerability-body">
+                    <div class="detail-section">
+                        <h4>{% if config.language == 'es' %}Descripción{% else %}Description{% endif %}</h4>
+                        <p>{{ finding.description }}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>{% if config.language == 'es' %}Activo Afectado{% else %}Affected Asset{% endif %}</h4>
+                        <p><strong>URL:</strong> {{ finding.affected_url or 'N/A' }}</p>
+                        {% if finding.affected_parameter %}
+                        <p><strong>{% if config.language == 'es' %}Parámetro:{% else %}Parameter:{% endif %}</strong> {{ finding.affected_parameter }}</p>
+                        {% endif %}
+                    </div>
+
+                    {% if finding.proof_of_concept %}
+                    <div class="detail-section">
+                        <h4>{% if config.language == 'es' %}Prueba de Concepto{% else %}Proof of Concept{% endif %}</h4>
+                        <div class="code-block">{{ finding.proof_of_concept }}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if config.include_remediation and finding.remediation %}
+                    <div class="detail-section">
+                        <h4>{% if config.language == 'es' %}Remediación{% else %}Remediation{% endif %}</h4>
+                        <p>{{ finding.remediation }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if finding.references %}
+                    <div class="detail-section">
+                        <h4>{% if config.language == 'es' %}Referencias{% else %}References{% endif %}</h4>
+                        <div class="references">
+                            {% for ref in finding.references %}
+                            <a href="{{ ref if ref.startswith('http') else '#' }}" target="_blank">{{ ref }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Remediation Plan -->
+        {% if config.include_remediation and report.remediation_plan %}
+        <div class="section">
+            <h2>{% if config.language == 'es' %}Plan de Remediación Priorizado{% else %}Prioritized Remediation Plan{% endif %}</h2>
+            <p style="margin-bottom: 20px; color: #666;">
+                {% if config.language == 'es' %}
+                Las siguientes acciones están priorizadas por severidad e impacto.
+                {% else %}
+                The following actions are prioritized by severity and impact.
+                {% endif %}
+            </p>
+
+            {% for item in report.remediation_plan %}
+            <div class="remediation-item">
+                <div class="priority badge {{ item.priority }}">{{ item.priority }} {% if config.language == 'es' %}Prioridad{% else %}Priority{% endif %}</div>
+                <h4 style="margin-top: 10px;">{{ item.remediation }}</h4>
+                <div class="affected-findings">
+                    <strong>{% if config.language == 'es' %}Afecta a {% else %}Affects {% endif %}{{ item.affected_count }} {% if config.language == 'es' %}hallazgos{% else %}findings{% endif %}:</strong>
+                    {{ item.findings[:3]|join(', ') }}{% if item.findings|length > 3 %}, ...{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Affected Assets -->
+        {% if report.affected_assets %}
+        <div class="section">
+            <h2>{% if config.language == 'es' %}Activos Afectados{% else %}Affected Assets{% endif %}</h2>
+            <div style="background: #f9f9f9; padding: 20px; border-radius: 6px;">
+                {% for asset in report.affected_assets %}
+                <div style="padding: 5px 0;">
+                    <span style="color: #667eea;">▸</span> {{ asset }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>&gt; {% if config.language == 'es' %}Generado por{% else %}Generated by{% endif %} GTL AI Security Platform</p>
+            <p style="font-size: 0.9em; opacity: 0.8;">&gt; {{ generated_at.strftime('%Y-%m-%d %H:%M:%S UTC') }}</p>
+        </div>
+    </div>
+</body>
+</html>

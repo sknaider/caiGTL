@@ -1,14 +1,28 @@
 """
 GTL Security Scanner Module
-
-Automated vulnerability scanning using CAI framework and industry-standard tools.
+Automated penetration testing and vulnerability scanning engine.
 """
 
+from gtl_security_scanner.scanner import (
+    SecurityScanner,
+    ScanTarget,
+    ScanResult,
+    Vulnerability,
+    Service,
+    ScanType,
+    ScanStatus,
+    ScanError,
+)
+
 __version__ = "1.0.0"
-__author__ = "GTL Security Peru"
 
-from .scanner import SecurityScanner
-from .scheduler import ScanScheduler
-from .reporter import ReportGenerator
-
-__all__ = ["SecurityScanner", "ScanScheduler", "ReportGenerator"]
+__all__ = [
+    'SecurityScanner',
+    'ScanTarget',
+    'ScanResult',
+    'Vulnerability',
+    'Service',
+    'ScanType',
+    'ScanStatus',
+    'ScanError',
+]
