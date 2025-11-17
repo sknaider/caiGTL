@@ -27,7 +27,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { token, checkAuth } = useAuthStore();
+  const { checkAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
