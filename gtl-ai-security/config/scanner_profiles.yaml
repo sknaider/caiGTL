@@ -1,0 +1,327 @@
+# GTL Security Scanner - Scan Profiles by Industry Sector
+
+version: "1.0"
+
+# ===========================================
+# LOGISTICS SECTOR PROFILE
+# ===========================================
+logistics:
+  name: "Logistics & Supply Chain Security"
+  description: "Comprehensive security assessment for logistics companies"
+
+  scope:
+    - EDI systems security
+    - Customs data protection
+    - Warehouse management systems
+    - Fleet tracking systems
+    - Supply chain APIs
+
+  tools:
+    nmap:
+      enabled: true
+      args: "-sV -sC -p- --script=vuln"
+      scan_type: comprehensive
+
+    nuclei:
+      enabled: true
+      templates:
+        - cves
+        - exposures
+        - misconfiguration
+        - vulnerabilities
+      severity: ["critical", "high", "medium"]
+
+    nikto:
+      enabled: true
+      plugins: all
+
+    sqlmap:
+      enabled: true
+      level: 3
+      risk: 2
+
+  custom_checks:
+    - edi_security_check
+    - customs_data_encryption
+    - bill_of_lading_validation
+    - supply_chain_integrity
+
+  reporting:
+    format: ["json", "pdf", "html"]
+    language: es
+    include_executive_summary: true
+    cvss_threshold: 4.0
+
+  schedule:
+    frequency: weekly
+    day: sunday
+    time: "02:00"
+    timezone: America/Lima
+
+# ===========================================
+# MEDICAL AI SECTOR PROFILE
+# ===========================================
+medical_ai:
+  name: "Medical AI & Healthcare Security"
+  description: "HIPAA-compliant security assessment for medical AI providers"
+
+  scope:
+    - PHI data protection
+    - AI model endpoint security
+    - Patient data encryption
+    - Access control systems
+    - Medical imaging systems
+
+  tools:
+    nmap:
+      enabled: true
+      args: "-sV -sC -p22,80,443,3389,5432,3306"
+      scan_type: targeted
+
+    nuclei:
+      enabled: true
+      templates:
+        - cves
+        - exposures
+        - takeovers
+        - default-logins
+      severity: ["critical", "high"]
+
+    nikto:
+      enabled: true
+      plugins: ["headers", "ssl", "auth"]
+
+    sqlmap:
+      enabled: false  # Too aggressive for production medical systems
+
+  custom_checks:
+    - hipaa_compliance_check
+    - phi_exposure_detection
+    - encryption_validation
+    - access_control_audit
+    - rtx_5090_endpoint_security  # For AI inference servers
+
+  compliance:
+    frameworks:
+      - HIPAA
+      - ISO27001
+      - SOC2
+    automated_evidence: true
+
+  reporting:
+    format: ["json", "pdf"]
+    language: en
+    include_compliance_matrix: true
+    include_remediation_plan: true
+    cvss_threshold: 7.0  # Higher threshold for medical
+
+  schedule:
+    frequency: monthly
+    day: 1  # First day of month
+    time: "03:00"
+    timezone: America/Lima
+
+# ===========================================
+# E-COMMERCE SECTOR PROFILE
+# ===========================================
+ecommerce:
+  name: "E-commerce & Payment Security"
+  description: "PCI-DSS focused security assessment"
+
+  scope:
+    - Payment gateway security
+    - Customer data protection
+    - Shopping cart security
+    - API security
+    - CDN configuration
+
+  tools:
+    nmap:
+      enabled: true
+      args: "-sV -sC -p80,443,8080,8443"
+      scan_type: web_focused
+
+    nuclei:
+      enabled: true
+      templates:
+        - cves
+        - exposures
+        - misconfiguration
+        - token-spray
+        - default-logins
+      severity: ["critical", "high", "medium"]
+
+    nikto:
+      enabled: true
+      plugins: all
+
+    sqlmap:
+      enabled: true
+      level: 2
+      risk: 1
+
+  custom_checks:
+    - payment_data_encryption
+    - pci_dss_compliance
+    - cart_security_check
+    - session_management_audit
+
+  compliance:
+    frameworks:
+      - PCI-DSS
+      - GDPR
+    automated_evidence: true
+
+  reporting:
+    format: ["json", "pdf", "html"]
+    language: es
+    include_executive_summary: true
+    cvss_threshold: 5.0
+
+  schedule:
+    frequency: weekly
+    day: saturday
+    time: "01:00"
+    timezone: America/Lima
+
+# ===========================================
+# QUICK SCAN PROFILE
+# ===========================================
+quick_scan:
+  name: "Quick Security Assessment"
+  description: "Fast vulnerability scan for rapid assessment"
+
+  scope:
+    - Critical vulnerabilities only
+    - External attack surface
+    - Known CVEs
+
+  tools:
+    nmap:
+      enabled: true
+      args: "-sV --top-ports 1000"
+      scan_type: fast
+
+    nuclei:
+      enabled: true
+      templates:
+        - cves
+        - exposures
+      severity: ["critical", "high"]
+
+    nikto:
+      enabled: false
+
+    sqlmap:
+      enabled: false
+
+  reporting:
+    format: ["json"]
+    language: es
+    include_executive_summary: false
+    cvss_threshold: 7.0
+
+  schedule:
+    frequency: daily
+    time: "04:00"
+    timezone: America/Lima
+
+# ===========================================
+# COMPREHENSIVE SCAN PROFILE
+# ===========================================
+comprehensive:
+  name: "Comprehensive Security Audit"
+  description: "Deep security assessment with all tools"
+
+  scope:
+    - Full network discovery
+    - All vulnerability types
+    - Configuration audit
+    - Compliance checks
+    - Penetration testing
+
+  tools:
+    nmap:
+      enabled: true
+      args: "-sS -sV -sC -p- -A --script=vuln,exploit"
+      scan_type: full
+
+    nuclei:
+      enabled: true
+      templates: all
+      severity: ["critical", "high", "medium", "low", "info"]
+
+    nikto:
+      enabled: true
+      plugins: all
+
+    sqlmap:
+      enabled: true
+      level: 5
+      risk: 3
+
+  custom_checks:
+    - full_compliance_audit
+    - advanced_threat_detection
+    - configuration_review
+    - privilege_escalation_check
+
+  reporting:
+    format: ["json", "pdf", "html", "xml"]
+    language: es
+    include_executive_summary: true
+    include_technical_details: true
+    include_remediation_plan: true
+    include_compliance_matrix: true
+    cvss_threshold: 0.0  # Report all findings
+
+  schedule:
+    frequency: monthly
+    day: 15  # Mid-month
+    time: "00:00"
+    timezone: America/Lima
+
+# ===========================================
+# DEFAULT PROFILE
+# ===========================================
+default:
+  name: "Standard Security Scan"
+  description: "Balanced security assessment"
+
+  scope:
+    - Network security
+    - Web application security
+    - Common vulnerabilities
+
+  tools:
+    nmap:
+      enabled: true
+      args: "-sV -sC"
+      scan_type: standard
+
+    nuclei:
+      enabled: true
+      templates:
+        - cves
+        - exposures
+        - misconfiguration
+      severity: ["critical", "high"]
+
+    nikto:
+      enabled: true
+      plugins: ["headers", "ssl"]
+
+    sqlmap:
+      enabled: false
+
+  reporting:
+    format: ["json", "pdf"]
+    language: es
+    include_executive_summary: true
+    cvss_threshold: 4.0
+
+  schedule:
+    frequency: weekly
+    day: sunday
+    time: "02:00"
+    timezone: America/Lima

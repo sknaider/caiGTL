@@ -1,0 +1,86 @@
+# CAI Framework Configuration for GTL Platform
+# See: https://github.com/aliasrobotics/cai
+
+version: "1.0"
+
+# Default Model Configuration
+model:
+  provider: deepseek  # deepseek, openai, anthropic, ollama
+  name: alias0  # DeepSeek V3
+  temperature: 0.7
+  max_tokens: 4096
+  timeout: 120  # seconds
+
+# Security Guardrails
+guardrails:
+  enabled: true
+  input_validation: true
+  output_filtering: true
+  prompt_injection_detection: true
+  command_filtering: true
+
+# Tracing & Monitoring
+tracing:
+  enabled: true
+  provider: opentelemetry
+  export_interval: 30  # seconds
+
+# Cost Management
+pricing:
+  enabled: true
+  daily_limit: 50.0  # USD
+  monthly_limit: 1000.0  # USD
+  alert_threshold: 0.8  # 80% of limit
+
+# Agent Configuration
+agents:
+  # Default timeout for all agents
+  default_timeout: 300  # seconds
+
+  # Parallel execution settings
+  max_parallel_agents: 3
+  unified_context: false
+
+  # Retry configuration
+  max_retries: 3
+  retry_delay: 5  # seconds
+
+# Tools Configuration
+tools:
+  # Generic Linux Command
+  generic_linux_command:
+    enabled: true
+    timeout: 60
+    max_sessions: 10
+
+  # Nmap
+  nmap:
+    enabled: true
+    default_args: "-sV -sC"
+    timeout: 300
+
+  # Shodan
+  shodan:
+    enabled: true
+    rate_limit: 1  # queries per second
+    cache_ttl: 3600  # seconds
+
+  # Network Capture
+  capture_traffic:
+    enabled: true
+    max_duration: 60  # seconds
+    interface: eth0
+
+  # Web Search
+  search_web:
+    enabled: false  # Disabled by default to save costs
+    provider: perplexity
+
+# Logging
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: json
+  output: stdout
+  file: /var/log/cai/agent.log
+  rotation: daily
+  retention: 30  # days
