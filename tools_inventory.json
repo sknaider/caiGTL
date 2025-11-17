@@ -1,0 +1,718 @@
+{
+  "metadata": {
+    "framework": "CAI (Cybersecurity AI Framework)",
+    "version": "0.5.5",
+    "created_for": "GTL AI Security Platform",
+    "total_tool_modules": 24,
+    "total_functions": 60,
+    "last_updated": "2025-11-17"
+  },
+  "categories": {
+    "reconnaissance": {
+      "description": "OSINT, scanning, enumeration, and information gathering tools",
+      "tools": [
+        {
+          "name": "generic_linux_command",
+          "file": "src/cai/tools/reconnaissance/generic_linux_command.py",
+          "functions": ["generic_linux_command"],
+          "description": "Most versatile tool - executes any shell command with session management",
+          "capabilities": [
+            "Execute arbitrary Linux commands",
+            "Interactive session management (ssh, nc, etc.)",
+            "CTF environment detection",
+            "Container execution support",
+            "SSH tunnel support",
+            "Unicode homograph attack detection"
+          ],
+          "parameters": {
+            "command": "Shell command to execute",
+            "interactive": "Boolean for interactive mode",
+            "session_id": "Session identifier for persistent connections"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Core tool for all security testing"
+        },
+        {
+          "name": "nmap",
+          "file": "src/cai/tools/reconnaissance/nmap.py",
+          "functions": ["nmap"],
+          "description": "Network scanning and host discovery utility",
+          "capabilities": [
+            "Port scanning",
+            "Service version detection",
+            "OS fingerprinting",
+            "Vulnerability scanning (with NSE scripts)",
+            "Network topology mapping"
+          ],
+          "parameters": {
+            "args": "Nmap arguments (e.g., '-sV -p-')",
+            "target": "Target host or IP address",
+            "ctf": "Optional CTF context"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "CRITICAL - Essential for network security assessments of logistics networks"
+        },
+        {
+          "name": "shodan",
+          "file": "src/cai/tools/reconnaissance/shodan.py",
+          "functions": ["shodan_search", "shodan_host_info"],
+          "description": "Internet-wide device discovery and reconnaissance",
+          "capabilities": [
+            "Search for exposed devices and services",
+            "Identify vulnerable systems",
+            "Get detailed host information (OS, ports, vulnerabilities)",
+            "Discover IoT devices",
+            "Find exposed databases and webcams"
+          ],
+          "parameters": {
+            "shodan_search": {
+              "query": "Shodan search query (e.g., 'apache city:Lima')",
+              "limit": "Maximum number of results (default: 10)"
+            },
+            "shodan_host_info": {
+              "ip": "IP address to investigate"
+            }
+          },
+          "cost": "Free tier: 1 API credit/month, Paid: from $59/month",
+          "requires_api_key": true,
+          "env_var": "SHODAN_API_KEY",
+          "gtl_relevance": "HIGH - Discover exposed logistics systems and IoT devices globally"
+        },
+        {
+          "name": "netstat",
+          "file": "src/cai/tools/reconnaissance/netstat.py",
+          "functions": ["netstat"],
+          "description": "Network statistics and active connections monitoring",
+          "capabilities": [
+            "List active network connections",
+            "Show listening ports",
+            "Display routing tables",
+            "Monitor network interfaces"
+          ],
+          "parameters": {
+            "args": "Netstat arguments"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Useful for incident response and forensics"
+        },
+        {
+          "name": "curl",
+          "file": "src/cai/tools/reconnaissance/curl.py",
+          "functions": ["curl"],
+          "description": "HTTP/HTTPS request utility for web reconnaissance",
+          "capabilities": [
+            "Make HTTP requests (GET, POST, PUT, DELETE)",
+            "Custom headers and authentication",
+            "File uploads/downloads",
+            "Cookie handling",
+            "SSL/TLS testing"
+          ],
+          "parameters": {
+            "url": "Target URL",
+            "args": "Additional curl arguments"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Web application testing for logistics portals"
+        },
+        {
+          "name": "wget",
+          "file": "src/cai/tools/reconnaissance/wget.py",
+          "functions": ["wget"],
+          "description": "File download and web mirroring utility",
+          "capabilities": [
+            "Download files from web servers",
+            "Mirror websites",
+            "Recursive downloads",
+            "Resume interrupted downloads"
+          ],
+          "parameters": {
+            "url": "URL to download from",
+            "args": "Additional wget arguments"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Download target files for analysis"
+        },
+        {
+          "name": "netcat",
+          "file": "src/cai/tools/reconnaissance/netcat.py",
+          "functions": ["netcat"],
+          "description": "TCP/UDP communication utility (the 'Swiss Army knife' of networking)",
+          "capabilities": [
+            "Port scanning",
+            "File transfers",
+            "Backdoor/reverse shell creation",
+            "Port forwarding",
+            "Chat servers"
+          ],
+          "parameters": {
+            "host": "Target host",
+            "port": "Target port",
+            "args": "Additional nc arguments"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Network testing and exploitation"
+        },
+        {
+          "name": "filesystem",
+          "file": "src/cai/tools/reconnaissance/filesystem.py",
+          "functions": ["read_file", "write_file", "list_directory", "search_files"],
+          "description": "Filesystem operations for reconnaissance and data gathering",
+          "capabilities": [
+            "Read file contents",
+            "Write files",
+            "List directory contents",
+            "Search for files by pattern",
+            "File permissions inspection"
+          ],
+          "parameters": {
+            "path": "File or directory path",
+            "content": "Content to write (for write operations)",
+            "pattern": "Search pattern (for search operations)"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Examine compromised systems and analyze configurations"
+        },
+        {
+          "name": "crypto_tools",
+          "file": "src/cai/tools/reconnaissance/crypto_tools.py",
+          "functions": ["hash_crack", "encode", "decode", "base64_encode", "base64_decode"],
+          "description": "Cryptography and encoding utilities",
+          "capabilities": [
+            "Hash cracking (MD5, SHA1, SHA256)",
+            "Base64 encoding/decoding",
+            "URL encoding/decoding",
+            "Hex encoding/decoding",
+            "ROT13 cipher"
+          ],
+          "parameters": {
+            "data": "Data to process",
+            "algorithm": "Hashing or encoding algorithm"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Decode obfuscated data and crack password hashes"
+        },
+        {
+          "name": "exec_code",
+          "file": "src/cai/tools/reconnaissance/exec_code.py",
+          "functions": ["exec_python_code"],
+          "description": "Execute arbitrary Python code dynamically",
+          "capabilities": [
+            "Run Python scripts",
+            "Data processing",
+            "Algorithm implementation",
+            "Quick prototyping"
+          ],
+          "parameters": {
+            "code": "Python code to execute"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Automate custom security checks"
+        }
+      ]
+    },
+    "web": {
+      "description": "Web application testing and exploitation tools",
+      "tools": [
+        {
+          "name": "search_web",
+          "file": "src/cai/tools/web/search_web.py",
+          "functions": ["search_web"],
+          "description": "Web search via Perplexity API for OSINT",
+          "capabilities": [
+            "Internet search for intelligence gathering",
+            "Find public information about targets",
+            "Discover vulnerabilities and exploits",
+            "Research security advisories"
+          ],
+          "parameters": {
+            "query": "Search query"
+          },
+          "cost": "Perplexity API: from $0.20/1K tokens",
+          "requires_api_key": true,
+          "env_var": "PERPLEXITY_API_KEY",
+          "gtl_relevance": "MEDIUM - Research target companies and technologies"
+        },
+        {
+          "name": "google_search",
+          "file": "src/cai/tools/web/google_search.py",
+          "functions": ["google_search"],
+          "description": "Google Custom Search API integration",
+          "capabilities": [
+            "Google dorking",
+            "Find exposed files and directories",
+            "Discover subdomains",
+            "Search for sensitive information leaks"
+          ],
+          "parameters": {
+            "query": "Search query",
+            "num_results": "Number of results to return"
+          },
+          "cost": "Free tier: 100 queries/day, Paid: $5/1000 queries",
+          "requires_api_key": true,
+          "env_var": "GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX",
+          "gtl_relevance": "MEDIUM - OSINT and information disclosure detection"
+        },
+        {
+          "name": "headers",
+          "file": "src/cai/tools/web/headers.py",
+          "functions": ["analyze_http_headers"],
+          "description": "HTTP header analysis for security misconfigurations",
+          "capabilities": [
+            "Analyze security headers (CSP, HSTS, X-Frame-Options)",
+            "Detect missing security headers",
+            "Server fingerprinting",
+            "Check for information disclosure"
+          ],
+          "parameters": {
+            "url": "Target URL to analyze"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Assess web application security posture"
+        },
+        {
+          "name": "webshell_suit",
+          "file": "src/cai/tools/web/webshell_suit.py",
+          "functions": ["generate_php_webshell", "curl_webshell", "upload_webshell"],
+          "description": "PHP webshell generation and deployment for web exploitation",
+          "capabilities": [
+            "Generate basic PHP webshell",
+            "Upload webshell via HTTP or FTP",
+            "Execute commands on compromised servers",
+            "Post-exploitation access"
+          ],
+          "parameters": {
+            "target_url": "Target URL for upload",
+            "port": "Port number",
+            "protocol": "Upload protocol (http or ftp)",
+            "command": "Command to execute via webshell"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Post-exploitation for authorized pentests",
+          "warning": "ONLY for authorized penetration testing"
+        }
+      ]
+    },
+    "network": {
+      "description": "Network traffic analysis and packet capture tools",
+      "tools": [
+        {
+          "name": "capture_traffic",
+          "file": "src/cai/tools/network/capture_traffic.py",
+          "functions": ["capture_remote_traffic"],
+          "description": "Remote packet capture via SSH using tcpdump",
+          "capabilities": [
+            "Capture network traffic remotely",
+            "Filter packets by protocol/port",
+            "Save PCAP files for analysis",
+            "Real-time traffic monitoring"
+          ],
+          "parameters": {
+            "ip": "Target IP address",
+            "username": "SSH username",
+            "password": "SSH password",
+            "interface": "Network interface (e.g., eth0)",
+            "capture_filter": "BPF filter expression",
+            "port": "SSH port (default: 22)",
+            "timeout": "Capture duration in seconds"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Monitor network traffic for threat detection"
+        }
+      ]
+    },
+    "command_and_control": {
+      "description": "C2 and remote access tools for post-exploitation",
+      "tools": [
+        {
+          "name": "sshpass",
+          "file": "src/cai/tools/command_and_control/sshpass.py",
+          "functions": ["run_ssh_command_with_credentials"],
+          "description": "SSH with password authentication (non-interactive)",
+          "capabilities": [
+            "Execute remote commands via SSH",
+            "Automated SSH access with credentials",
+            "Useful for CTF challenges",
+            "Post-exploitation lateral movement"
+          ],
+          "parameters": {
+            "host": "Target hostname or IP",
+            "username": "SSH username",
+            "password": "SSH password",
+            "command": "Command to execute",
+            "port": "SSH port (default: 22)"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Automated remote access for security testing"
+        },
+        {
+          "name": "command_and_control",
+          "file": "src/cai/tools/command_and_control/command_and_control.py",
+          "functions": ["establish_c2_connection", "send_c2_command"],
+          "description": "Command & Control communications framework",
+          "capabilities": [
+            "Establish C2 channels",
+            "Send commands to compromised systems",
+            "Receive exfiltrated data",
+            "Maintain persistent access"
+          ],
+          "parameters": {
+            "target": "Target system",
+            "command": "C2 command to send"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "LOW - Only for advanced authorized pentests",
+          "warning": "ONLY for authorized red team operations"
+        }
+      ]
+    },
+    "misc": {
+      "description": "Miscellaneous utilities and AI-powered tools",
+      "tools": [
+        {
+          "name": "code_interpreter",
+          "file": "src/cai/tools/misc/code_interpreter.py",
+          "functions": ["execute_python"],
+          "description": "Python code execution sandbox for data analysis",
+          "capabilities": [
+            "Execute Python code safely",
+            "Data processing and analysis",
+            "Algorithm implementation",
+            "Exploit prototyping"
+          ],
+          "parameters": {
+            "code": "Python code to execute"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Custom security analysis scripts"
+        },
+        {
+          "name": "rag",
+          "file": "src/cai/tools/misc/rag.py",
+          "functions": ["search_knowledge_base"],
+          "description": "Retrieval-Augmented Generation for knowledge base search",
+          "capabilities": [
+            "Search security knowledge bases",
+            "Query vulnerability databases",
+            "Access documentation",
+            "Leverage past findings"
+          ],
+          "parameters": {
+            "query": "Search query",
+            "knowledge_base": "KB to search"
+          },
+          "cost": "Depends on vector DB (Pinecone, Weaviate, etc.)",
+          "requires_api_key": "Optional (depends on KB)",
+          "gtl_relevance": "MEDIUM - Build GTL-specific security knowledge base"
+        },
+        {
+          "name": "reasoning",
+          "file": "src/cai/tools/misc/reasoning.py",
+          "functions": ["chain_of_thought", "self_reflection"],
+          "description": "AI reasoning and planning utilities",
+          "capabilities": [
+            "Chain-of-thought reasoning for complex problems",
+            "Self-reflection on agent decisions",
+            "Plan multi-step attacks",
+            "Validate findings"
+          ],
+          "parameters": {
+            "problem": "Problem to reason about"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "HIGH - Improve agent decision-making"
+        },
+        {
+          "name": "cli_utils",
+          "file": "src/cai/tools/misc/cli_utils.py",
+          "functions": ["run_cli_command", "parse_cli_output"],
+          "description": "CLI utilities and output parsing",
+          "capabilities": [
+            "Execute CLI commands",
+            "Parse structured output",
+            "Handle command errors",
+            "Format results"
+          ],
+          "parameters": {
+            "command": "CLI command"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Helper utilities"
+        }
+      ]
+    },
+    "others": {
+      "description": "Scripting and automation utilities",
+      "tools": [
+        {
+          "name": "scripting",
+          "file": "src/cai/tools/others/scripting.py",
+          "functions": ["create_bash_script", "execute_bash_script"],
+          "description": "Bash script generation and execution",
+          "capabilities": [
+            "Generate bash scripts dynamically",
+            "Execute automation scripts",
+            "Chain multiple tools",
+            "Workflow automation"
+          ],
+          "parameters": {
+            "script_content": "Bash script content"
+          },
+          "cost": "Free",
+          "requires_api_key": false,
+          "gtl_relevance": "MEDIUM - Automate repetitive security tasks"
+        }
+      ]
+    }
+  },
+  "extensible_categories": {
+    "description": "Empty categories ready for GTL custom tools",
+    "categories": [
+      {
+        "name": "exploitation",
+        "path": "src/cai/tools/exploitation/",
+        "status": "EMPTY - Ready for extension",
+        "gtl_recommendations": [
+          "Add SAP/Oracle exploitation modules",
+          "Create WMS/TMS vulnerability exploits",
+          "Develop logistics-specific CVE exploits"
+        ]
+      },
+      {
+        "name": "privilege_escalation",
+        "path": "src/cai/tools/privilege_escalation/",
+        "status": "EMPTY - Ready for extension",
+        "gtl_recommendations": [
+          "Linux privilege escalation checks",
+          "Windows privilege escalation",
+          "Container escape techniques"
+        ]
+      },
+      {
+        "name": "lateral_movement",
+        "path": "src/cai/tools/lateral_movement/",
+        "status": "EMPTY - Ready for extension",
+        "gtl_recommendations": [
+          "Network pivoting tools",
+          "Credential reuse detection",
+          "Domain enumeration"
+        ]
+      },
+      {
+        "name": "data_exfiltration",
+        "path": "src/cai/tools/data_exfiltration/",
+        "status": "EMPTY - Ready for extension",
+        "gtl_recommendations": [
+          "Data loss prevention bypass techniques",
+          "Steganography tools",
+          "Covert channel creation"
+        ]
+      }
+    ]
+  },
+  "third_party_integrations": {
+    "description": "Security tools referenced in documentation but not directly integrated",
+    "tools": [
+      {
+        "name": "Metasploit Framework",
+        "type": "Exploitation framework",
+        "integration_status": "Referenced in agent prompts, not directly integrated",
+        "gtl_opportunity": "Create metasploit_tool.py wrapper for MSF Console",
+        "cost": "Free (Community Edition)"
+      },
+      {
+        "name": "Burp Suite",
+        "type": "Web application security testing",
+        "integration_status": "Referenced in documentation, manual use required",
+        "gtl_opportunity": "Integrate Burp Suite REST API for automated scanning",
+        "cost": "Community: Free, Professional: $449/year"
+      },
+      {
+        "name": "SQLMap",
+        "type": "SQL injection automation",
+        "integration_status": "Can be executed via generic_linux_command",
+        "gtl_opportunity": "Create dedicated sqlmap wrapper tool",
+        "cost": "Free"
+      },
+      {
+        "name": "Wireshark/tshark",
+        "type": "Packet analysis",
+        "integration_status": "Can be used via generic_linux_command",
+        "gtl_opportunity": "Create tshark analysis wrapper with automated reporting",
+        "cost": "Free"
+      },
+      {
+        "name": "Aircrack-ng",
+        "type": "WiFi security testing",
+        "integration_status": "Referenced in wifi_security_tester agent",
+        "gtl_opportunity": "Low priority (limited WiFi pentesting in logistics)",
+        "cost": "Free"
+      },
+      {
+        "name": "C99.nl API",
+        "type": "Subdomain discovery and OSINT",
+        "integration_status": "Referenced in documentation, requires API key",
+        "gtl_opportunity": "Create c99_subdomain_finder tool",
+        "cost": "From $9.99/month"
+      }
+    ]
+  },
+  "gtl_custom_tools_recommendations": {
+    "description": "Recommended custom tools for GTL AI Security Platform",
+    "high_priority": [
+      {
+        "tool_name": "sap_security_scanner",
+        "description": "SAP ERP security assessment tool",
+        "capabilities": [
+          "SAP security notes validation",
+          "ABAP code vulnerability scanning",
+          "SAP user privilege analysis",
+          "Transport management audit"
+        ],
+        "integration_method": "New Python module using SAP PyRFC library",
+        "estimated_effort": "2-3 weeks"
+      },
+      {
+        "tool_name": "oracle_security_checker",
+        "description": "Oracle Database and ERP security testing",
+        "capabilities": [
+          "Oracle patch verification",
+          "Privilege escalation detection",
+          "SQL injection testing for Oracle",
+          "Oracle EBS security assessment"
+        ],
+        "integration_method": "Python module using cx_Oracle",
+        "estimated_effort": "2-3 weeks"
+      },
+      {
+        "tool_name": "logistics_iot_scanner",
+        "description": "IoT device security scanner for logistics",
+        "capabilities": [
+          "GPS tracker vulnerability assessment",
+          "RFID reader security testing",
+          "Fleet management API testing",
+          "Warehouse automation system checks"
+        ],
+        "integration_method": "Extend nmap and shodan tools with logistics-specific signatures",
+        "estimated_effort": "1-2 weeks"
+      },
+      {
+        "tool_name": "peruvian_compliance_checker",
+        "description": "Automated compliance validation for Peru",
+        "capabilities": [
+          "Ley 29733 (data protection) compliance",
+          "PCIDSS requirement validation",
+          "SUNAT electronic invoice security",
+          "Industry-specific regulation checks"
+        ],
+        "integration_method": "New Python module with compliance ruleset database",
+        "estimated_effort": "3-4 weeks"
+      }
+    ],
+    "medium_priority": [
+      {
+        "tool_name": "wms_vulnerability_scanner",
+        "description": "Warehouse Management System security scanner",
+        "capabilities": [
+          "SAP EWM vulnerability scanning",
+          "Oracle WMS security assessment",
+          "Manhattan Associates WMOS testing",
+          "API security validation"
+        ],
+        "integration_method": "Extension of web tools with WMS-specific checks",
+        "estimated_effort": "2 weeks"
+      },
+      {
+        "tool_name": "tms_security_tester",
+        "description": "Transportation Management System tester",
+        "capabilities": [
+          "TMS API security testing",
+          "Fleet tracking system assessment",
+          "Route optimization software vulnerabilities",
+          "Driver app security analysis"
+        ],
+        "integration_method": "Custom module with TMS vendor signatures",
+        "estimated_effort": "2 weeks"
+      },
+      {
+        "tool_name": "supply_chain_risk_analyzer",
+        "description": "Third-party vendor security assessment",
+        "capabilities": [
+          "Vendor security posture scoring",
+          "API integration security testing",
+          "Data sharing agreement validation",
+          "Third-party breach monitoring"
+        ],
+        "integration_method": "Combine web search, shodan, and custom risk scoring",
+        "estimated_effort": "2-3 weeks"
+      }
+    ],
+    "low_priority": [
+      {
+        "tool_name": "metasploit_wrapper",
+        "description": "Metasploit Framework integration",
+        "capabilities": [
+          "Automated exploit selection",
+          "Payload generation",
+          "Post-exploitation modules",
+          "Vulnerability verification"
+        ],
+        "integration_method": "Python wrapper for msfconsole RPC API",
+        "estimated_effort": "1-2 weeks"
+      },
+      {
+        "tool_name": "burp_automation",
+        "description": "Burp Suite automated scanning",
+        "capabilities": [
+          "Automated web app scanning",
+          "Active scan queue management",
+          "Finding extraction and reporting",
+          "Custom scan configurations"
+        ],
+        "integration_method": "Burp Suite REST API integration",
+        "estimated_effort": "1 week",
+        "requires_license": "Burp Suite Professional"
+      }
+    ]
+  },
+  "cost_summary": {
+    "free_tools": 20,
+    "requires_api_key": 4,
+    "api_costs": {
+      "shodan": "Free tier: 1 credit/month, Paid: from $59/month",
+      "perplexity": "From $0.20/1K tokens",
+      "google_search": "Free tier: 100 queries/day, Paid: $5/1000 queries",
+      "c99_api": "From $9.99/month (optional)"
+    },
+    "recommended_budget": {
+      "monthly_api_costs": "$100-200 (Shodan + API usage)",
+      "one_time_tools": "$0 (all open-source)",
+      "optional_commercial": "$449/year (Burp Suite Professional)"
+    },
+    "total_estimated_cost": "~$1,500-2,500/year for full tooling"
+  },
+  "notes": {
+    "open_source": "CAI Framework and all core tools are 100% open-source (MIT license)",
+    "extensibility": "Easy to add custom tools using @function_tool decorator",
+    "security": "All tools include guardrails to prevent misuse",
+    "gtl_fit": "Excellent fit for budget-conscious logistics security consulting",
+    "commercial_alternatives": "Many expensive commercial tools (Rapid7, Qualys, Nessus) can be replaced with CAI + custom tools",
+    "competitive_advantage": "Open-source foundation + custom logistics tools = unique market position"
+  }
+}
