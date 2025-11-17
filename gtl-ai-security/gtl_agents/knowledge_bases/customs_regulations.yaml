@@ -1,0 +1,310 @@
+# GTL Customs & International Trade Security Knowledge Base
+# SUNAT regulations, Ley 29733, cross-border data compliance
+
+sunat_systems:
+  - system: "SOL (Sistema de Operaciones en Línea)"
+    purpose: "Online tax and customs operations portal"
+    credentials:
+      - "Clave SOL"
+      - "Usuario SOL"
+      - "RUC (11-digit tax ID)"
+    access_capabilities:
+      - "File tax returns"
+      - "Submit customs declarations (DAM)"
+      - "Pay taxes and duties"
+      - "Request tax refunds"
+      - "Download tax receipts"
+    security_requirements:
+      - "Strong password (min 8 characters, alphanumeric + special)"
+      - "Change password every 90 days"
+      - "Do not share credentials"
+      - "Use only from authorized devices"
+
+  - system: "SEE (Sistema de Emisión Electrónica)"
+    purpose: "Electronic invoice (factura electrónica) submission"
+    credentials:
+      - "Certificate digital (PSE or OSE)"
+      - "RUC"
+    regulations:
+      - "Resolución 300-2014/SUNAT"
+      - "Resolución 182-2016/SUNAT"
+    security:
+      - "Digital signature required (certificado digital)"
+      - "TLS encryption mandatory"
+      - "Invoice XML validation"
+
+  - system: "VUCE (Ventanilla Única de Comercio Exterior)"
+    purpose: "Single window for foreign trade procedures"
+    integrations:
+      - "SUNAT customs"
+      - "SENASA (agricultural health)"
+      - "DIGESA (health)"
+      - "PRODUCE (production ministry)"
+    data_sensitivity: "High - contains complete import/export operations"
+
+ley_29733_requirements:
+  law_name: "Ley de Protección de Datos Personales (Peru Data Protection Law)"
+  enacted: "2011"
+  enforcing_authority: "Autoridad Nacional de Protección de Datos Personales"
+
+  key_principles:
+    - principle: "Consentimiento (Consent)"
+      requirement: "Obtain informed consent before processing personal data"
+      exceptions:
+        - "Legal obligation"
+        - "Contract execution"
+        - "Vital interests"
+        - "Legitimate interest (with safeguards)"
+
+    - principle: "Finalidad (Purpose Limitation)"
+      requirement: "Collect data only for specific, legitimate purposes"
+      prohibition: "Cannot use data for incompatible purposes without new consent"
+
+    - principle: "Proporcionalidad (Proportionality)"
+      requirement: "Collect only necessary data for stated purpose"
+      prohibition: "Excessive or irrelevant data collection"
+
+    - principle: "Calidad (Data Quality)"
+      requirement: "Data must be accurate, complete, and up-to-date"
+      obligation: "Provide mechanisms for data subjects to update/correct data"
+
+    - principle: "Seguridad (Security)"
+      requirement: "Implement technical and organizational security measures"
+      specific_measures:
+        - "Access controls"
+        - "Encryption of sensitive data"
+        - "Audit logging"
+        - "Incident response plan"
+        - "Staff training on data protection"
+
+  data_subject_rights:
+    - right: "Información (Right to Information)"
+      description: "Know what data is collected and how it's used"
+
+    - right: "Acceso (Right of Access)"
+      description: "Request copy of their personal data"
+      response_time: "10 business days"
+
+    - right: "Rectificación (Right to Rectification)"
+      description: "Correct inaccurate or incomplete data"
+
+    - right: "Cancelación (Right to Erasure)"
+      description: "Delete data when no longer necessary"
+      exceptions:
+        - "Legal retention requirements"
+        - "Tax records (4-6 years)"
+        - "Accounting records"
+
+    - right: "Oposición (Right to Object)"
+      description: "Object to processing for direct marketing or other purposes"
+
+  international_data_transfers:
+    article: "Article 19 - Flujo Transfronterizo"
+
+    transfer_allowed_if:
+      - condition: "Adequate level of protection in destination country"
+        examples:
+          - "European Union countries (GDPR)"
+          - "Argentina, Uruguay (adequacy decisions)"
+
+      - condition: "Contractual safeguards in place"
+        requirements:
+          - "Data Processing Agreement (DPA)"
+          - "Standard Contractual Clauses (SCC)"
+          - "Binding Corporate Rules (BCR) for multinationals"
+
+      - condition: "Explicit consent from data subject"
+        requirements:
+          - "Must be informed, specific, and freely given"
+          - "Must explain risks of international transfer"
+
+    prohibited_transfers:
+      - "Countries with known mass surveillance programs (without safeguards)"
+      - "Countries without data protection laws (without DPA)"
+
+  penalties:
+    minor_violations:
+      - examples: "Missing privacy policy, delayed responses to access requests"
+      - fine: "Up to 5 UIT (~$23,000 USD)"
+
+    serious_violations:
+      - examples: "Unauthorized data disclosure, no security measures"
+      - fine: "5-50 UIT ($23,000 - $230,000 USD)"
+
+    very_serious_violations:
+      - examples: "Repeated violations, obstruction of investigations"
+      - fine: "50-100 UIT ($230,000 - $460,000 USD)"
+      - additional: "Business closure possible"
+
+  registration_requirement:
+    - obligation: "Register personal data banks with Autoridad Nacional"
+      applies_to: "All entities processing personal data"
+      deadline: "Before starting data processing operations"
+      renewal: "Every 2 years"
+      online_portal: "https://www.minjus.gob.pe/rnpdp/"
+
+sunat_specific_regulations:
+  - regulation: "Resolución 185-2020/SUNAT"
+    topic: "Information security requirements for SUNAT systems"
+    key_requirements:
+      - "Secure storage of Clave SOL (never hardcode)"
+      - "Encryption of data transmitted to SUNAT"
+      - "Audit logging of all SUNAT API calls"
+      - "Incident reporting to SUNAT within 24 hours"
+
+  - regulation: "Código Tributario - Article 87"
+    topic: "Tax infractions"
+    infractions:
+      - "Failure to provide information to SUNAT"
+      - "Providing false information"
+      - "Obstructing SUNAT inspections"
+    penalties:
+      - "50% UIT ($2,300 USD) to 100% UIT ($4,600 USD)"
+      - "RUC suspension (business shutdown)"
+      - "Criminal charges for tax fraud"
+
+  - regulation: "Ley General de Aduanas (DL 1053)"
+    topic: "Customs law"
+    violations:
+      - type: "Incorrect customs declaration"
+        penalty: "Fine + seizure of goods"
+
+      - type: "Smuggling (contrabando)"
+        penalty: "Criminal prosecution + 5-8 years prison"
+
+      - type: "Undervaluation of imports (subfacturación)"
+        penalty: "Additional duties + fines + criminal charges"
+
+customs_data_protection:
+  sensitive_documents:
+    - document: "DAM (Declaración Aduanera de Mercancías)"
+      contains:
+        - "Importer/exporter RUC and details"
+        - "Supplier information"
+        - "Product descriptions and HS codes"
+        - "Invoice values and currency"
+        - "Country of origin"
+        - "Freight and insurance costs"
+      protection_requirements:
+        - "Encrypt at rest"
+        - "Access control (only authorized personnel)"
+        - "Audit all access"
+        - "Retention: 5 years minimum (tax law)"
+
+    - document: "Factura Comercial (Commercial Invoice)"
+      contains:
+        - "Buyer/seller details"
+        - "Payment terms"
+        - "Pricing"
+        - "Product specifications"
+      protection_requirements:
+        - "Confidential - customer NDAs often apply"
+        - "Watermark PDFs to prevent sharing"
+        - "Track downloads"
+
+    - document: "Certificado de Origen"
+      contains:
+        - "Manufacturer details"
+        - "Production location"
+        - "HS classification"
+      protection_requirements:
+        - "Verify authenticity (often fraud target)"
+        - "Check digital signatures if available"
+
+  third_party_risks:
+    - party: "Agente de Aduana (Customs Broker)"
+      access_to:
+        - "All import/export documentation"
+        - "Company financial data"
+        - "Supplier relationships"
+      security_requirements:
+        - "Sign NDA"
+        - "Provide only minimum necessary data"
+        - "Verify agent is SUNAT-licensed"
+        - "Audit agent's data handling annually"
+
+    - party: "Freight Forwarder"
+      access_to:
+        - "Shipping instructions"
+        - "Consignee details"
+        - "Cargo descriptions"
+      security_requirements:
+        - "Verify membership in international associations (IATA, FIATA)"
+        - "Confirm insurance coverage"
+        - "Contractual data protection clauses"
+
+aeo_program:
+  name: "OEA (Operador Económico Autorizado) / AEO (Authorized Economic Operator)"
+  authority: "SUNAT"
+
+  benefits:
+    - "Priority customs clearance"
+    - "Reduced physical inspections"
+    - "Deferred duty payment (30-45 days)"
+    - "Simplified procedures"
+    - "Mutual recognition with other countries' AEO programs"
+
+  requirements:
+    security_criteria:
+      - "Physical security of facilities (fences, cameras, guards)"
+      - "Personnel security (background checks)"
+      - "Cargo security (seals, inspections)"
+      - "IT security (this agent helps meet these!)"
+      - "Business partner security"
+      - "Crisis management and recovery"
+
+    it_security_specific:
+      - "Access controls for customs systems"
+      - "Encryption of sensitive data"
+      - "Intrusion detection systems"
+      - "Regular security audits"
+      - "Incident response plan"
+      - "Business continuity plan"
+
+  certification_process:
+    - step: 1
+      action: "Submit application to SUNAT"
+      documents: "Last 3 years of tax compliance, financial statements"
+
+    - step: 2
+      action: "SUNAT preliminary review"
+      duration: "30 days"
+
+    - step: 3
+      action: "On-site audit by SUNAT"
+      includes: "Physical security, IT systems, processes review"
+
+    - step: 4
+      action: "Corrective action period (if needed)"
+      duration: "90 days"
+
+    - step: 5
+      action: "AEO certification granted"
+      validity: "3 years (renewable)"
+
+compliance_best_practices:
+  - practice: "Maintain SUNAT transaction logs"
+    retention: "6 years minimum (tax law + 1 year margin)"
+    format: "Immutable logs (WORM storage or blockchain)"
+
+  - practice: "Quarterly Clave SOL rotation"
+    process:
+      - "Generate new password (16+ characters)"
+      - "Update in HashiCorp Vault or equivalent"
+      - "Test with SUNAT Beta environment"
+      - "Update production systems during maintenance window"
+      - "Revoke old password"
+
+  - practice: "Annual data protection impact assessment (DPIA)"
+    triggers:
+      - "New SUNAT integrations"
+      - "Changes to data processing"
+      - "International data transfers"
+    deliverable: "Report to Autoridad Nacional de Protección de Datos"
+
+  - practice: "Business continuity for customs operations"
+    requirements:
+      - "Backup customs brokers identified"
+      - "Offline procedures for SUNAT downtime"
+      - "Emergency contact list (SUNAT, freight forwarders, clients)"
+      - "Test DR plan quarterly"

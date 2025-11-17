@@ -1,0 +1,122 @@
+# GTL Logistics Security Knowledge Base
+# Sector-specific vulnerability patterns and compliance requirements
+
+edi_vulnerabilities:
+  - name: "Unencrypted EDI Transmission"
+    severity: critical
+    description: "EDI messages transmitted over HTTP without encryption"
+    business_impact: "Customer data, pricing, and supply chain information exposed"
+    compliance:
+      - "ISO 27001 A.10.1.1 - Cryptographic Controls"
+      - "ISO 27001 A.13.2.1 - Information Transfer Policies"
+      - "C-TPAT Security Criteria"
+    remediation_priority: immediate
+
+  - name: "Missing EDI Authentication"
+    severity: critical
+    description: "EDI endpoints accept messages without proper authentication"
+    business_impact: "Fraudulent orders, shipment hijacking, data manipulation"
+    compliance:
+      - "ISO 27001 A.9.4.1 - Information Access Restriction"
+      - "C-TPAT Business Partner Requirements"
+    remediation_priority: immediate
+
+  - name: "EDI Injection Vulnerability"
+    severity: high
+    description: "Insufficient validation of EDI message content"
+    business_impact: "Malicious code execution, data corruption"
+    compliance:
+      - "ISO 27001 A.14.2.1 - Secure Development Policy"
+    remediation_priority: high
+
+customs_api_risks:
+  - api_type: "SUNAT SOL (Peru)"
+    key_patterns:
+      - "clave_sol"
+      - "usuario_sol"
+      - "sunat_key"
+    impact: "Access to customs declarations, tax filings, e-invoices"
+    regulatory_consequences: "RUC suspension, criminal charges for fraud"
+
+  - api_type: "US CBP ACE"
+    key_patterns:
+      - "filer_code"
+      - "ace_password"
+      - "cbp_api_key"
+    impact: "Customs entry submissions, cargo release"
+    regulatory_consequences: "$5K-$10K fines per violation, import suspension"
+
+  - api_type: "Mexico SAT"
+    key_patterns:
+      - "sat_key"
+      - "rfc"
+      - "ciec"
+    impact: "Tax declarations, e-invoices (CFDI)"
+    regulatory_consequences: "Fines, tax audit, business closure"
+
+supply_chain_threats:
+  - threat: "Third-Party Logistics (3PL) Compromise"
+    attack_vector: "Weak partner authentication, shared credentials"
+    mitigation:
+      - "Multi-factor authentication for partners"
+      - "Partner-specific API keys"
+      - "IP whitelisting per partner"
+      - "Quarterly access review"
+
+  - threat: "Bill of Lading Data Exposure"
+    attack_vector: "Directory listing, predictable URLs, no authentication"
+    mitigation:
+      - "Disable directory indexing"
+      - "Implement authentication for all documents"
+      - "Use UUIDs instead of sequential IDs"
+      - "Encrypt documents at rest"
+
+  - threat: "Container Tracking Manipulation"
+    attack_vector: "Unprotected GPS tracking APIs"
+    mitigation:
+      - "Authentication required for tracking queries"
+      - "Delay real-time locations by 15-30 minutes"
+      - "Geofencing for sensitive routes"
+      - "Anomaly detection for unusual route changes"
+
+compliance_frameworks:
+  - framework: "C-TPAT (Customs-Trade Partnership Against Terrorism)"
+    region: "USA"
+    requirements:
+      - "Access controls for cargo and IT systems"
+      - "Personnel security (background checks)"
+      - "Physical security of facilities"
+      - "Business partner security requirements"
+    certification_value: "Reduced CBP inspections, faster customs clearance"
+
+  - framework: "ISO 28000 - Supply Chain Security"
+    region: "International"
+    requirements:
+      - "Security risk assessment"
+      - "Security management procedures"
+      - "Business continuity planning"
+      - "Communication and cooperation"
+
+  - framework: "WCO SAFE Framework"
+    region: "International (World Customs Organization)"
+    requirements:
+      - "Advance electronic cargo information"
+      - "Risk management approach"
+      - "Authorized Economic Operator (AEO) programs"
+      - "Customs-to-customs cooperation"
+
+sector_specific_regulations:
+  peru:
+    - regulation: "SUNAT Resolución 185-2020"
+      requirement: "Secure transmission of customs data"
+      penalties: "Fines, RUC suspension"
+
+  usa:
+    - regulation: "ISF (Importer Security Filing) 10+2 Rule"
+      requirement: "Submit data 24 hours before loading"
+      penalties: "$5,000 per violation"
+
+  eu:
+    - regulation: "Union Customs Code (UCC)"
+      requirement: "Electronic customs declarations"
+      penalties: "Customs audits, import bans"
